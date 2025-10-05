@@ -279,7 +279,7 @@ fun ChatScreen(
                             .padding(end = 8.dp),
                         placeholder = { Text("Type a message...") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                        singleLine = true,
+                        maxLines = 3,
                         enabled = modelName.isNotBlank()
                     )
 
