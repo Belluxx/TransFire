@@ -63,7 +63,8 @@ sequenceDiagram
     TransFire App->>TransFire App: Append response to chat
 ```
 
-# ⚠️ Limitations
+## ⚠️ Limitations
 
 - No support for two simultaneous clients using the same Firebase Database
 - No automatic detection of available models due to the heterogeneity of Ollama, LMStudio, etc...
+- No support for chat history and multiple chats (will be added in the future)
