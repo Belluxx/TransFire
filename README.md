@@ -2,6 +2,8 @@
 
 TransFire is a simple tool that allows you to use your locally running LLMs while far from home, without requiring port forwarding. TransFire will route an OpenAI compatible API exposed by LMStudio or Ollama through your firebase instance of choice, encrypting all traffic with a pre-shared AES key so not even Google will be able to read your conversations.
 
+To get started [download and install the apk](https://github.com/Belluxx/TransFire/releases/download/v1.0/transfire-v1.0.apk) and follow the setup instructions below.
+
 ## 🔨 Setup
 
 First you will need to setup the client:
