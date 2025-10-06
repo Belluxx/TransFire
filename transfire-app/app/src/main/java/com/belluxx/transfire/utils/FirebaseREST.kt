@@ -21,6 +21,7 @@ enum class FirebaseError {
     DATABASE_NOT_FOUND,
     NO_INTERNET_CONNECTION,
     UNAUTHORIZED,
+    WRONG_ENCRYPTION_KEY,
     UNKNOWN
 }
 
@@ -80,7 +81,14 @@ class FirebaseREST(val apiKey: String, val baseUrl: String, private val password
         getAsync(path,
             onSuccess = { data ->
                 if (data != "null") {
-                    val decryptedData = decryptResponse(extractPushedString(data))!!
+                    var decryptedData: String
+                    try {
+                        decryptedData = decryptResponse(extractPushedString(data))!!
+                    } catch (e: kotlin.Exception) {
+                        onFailure(e.toString(), FirebaseError.WRONG_ENCRYPTION_KEY)
+                        return@getAsync
+                    }
+
                     val serverResponse = JSONObject(decryptedData)
 
                     val choices = serverResponse.getJSONArray("choices")

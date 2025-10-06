@@ -117,7 +117,15 @@ class MainActivity : ComponentActivity() {
                                 onNoMessage = { },
                                 onFailure = { error, fbError ->
                                     Log.e("MainActivity", "Cannot read message: $error")
+
+                                    lastError.value = error
+                                    lastFbError.value = fbError
                                     isWaitingForResponse = false
+
+                                    val lastMsg = chat.last()
+                                    if (lastMsg.name == MessageAuthor.USER) {
+                                        chat = chat - chat.last()
+                                    }
                                 }
                             )
                         }
@@ -190,6 +198,13 @@ fun ShowFirebaseError(fbError: MutableState<FirebaseError?>, error: MutableState
             TextDialog(
                 title = "Firebase Database API key is not valid",
                 body = "The provided API key for the Firebase Database is not valid, the access to the database was denied",
+                onDismiss = { fbError.value = null; error.value = "" }
+            )
+        }
+        FirebaseError.WRONG_ENCRYPTION_KEY -> {
+            TextDialog(
+                title = "Wrong encryption password",
+                body = "Unable to decrypt received message, you are probably using two different passwords between server and app. Ensure that they are identical.",
                 onDismiss = { fbError.value = null; error.value = "" }
             )
         }
