@@ -62,3 +62,8 @@ sequenceDiagram
     TransFire App->>TransFire App: Decrypt response
     TransFire App->>TransFire App: Append response to chat
 ```
+
+# ⚠️ Limitations
+
+- Currently this project does not support two simultaneous clients using the same Firebase Database
+- There is no automatic detection of available models due to the heterogeneity of Ollama, LMStudio, etc...
