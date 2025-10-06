@@ -1,6 +1,6 @@
 # 🔥 TransFire
 
-TransFire is a simple tool that allows you to use your locally running LLMs while far from home, whitout requiring port forwarding. TransFire will route an OpenAI compatible API exposed by LMStudio or Ollama through your firebase instance of choice, encrypting all traffic with a pre-shared AES key so not even Google will be able to read your conversations.
+TransFire is a simple tool that allows you to use your locally running LLMs while far from home, without requiring port forwarding. TransFire will route an OpenAI compatible API exposed by LMStudio or Ollama through your firebase instance of choice, encrypting all traffic with a pre-shared AES key so not even Google will be able to read your conversations.
 
 ## 🔨 Setup
 
@@ -15,7 +15,7 @@ First you will need to setup the client:
 7. Select a database region of your choice
 8. Select `Start in locked mode` and proceed
 9. Click on the URL icon to copy the database URL. This is your **Firebase Database URL**
-10. Now clck on the settings icon in the top-left corner and open `Project Settings`
+10. Now click on the settings icon in the top-left corner and open `Project Settings`
 11. Go to the `Service accounts` tab and then click on `Database secrets`
 12. You should see one secret in the list, if not click on `Add secret`
 13. Hover on the secret to reveal the `Show` button and click it, then copy the key. This is your **Firebase Database API key**
@@ -65,5 +65,5 @@ sequenceDiagram
 
 # ⚠️ Limitations
 
-- Currently this project does not support two simultaneous clients using the same Firebase Database
-- There is no automatic detection of available models due to the heterogeneity of Ollama, LMStudio, etc...
+- No support for two simultaneous clients using the same Firebase Database
+- No automatic detection of available models due to the heterogeneity of Ollama, LMStudio, etc...
