@@ -146,7 +146,6 @@ def process_request():
                 return
         
         api_response_json = api_response.json()
-        print(api_response_json)
         
         # Encrypt the response
         response_str = json.dumps(api_response_json)
