@@ -78,3 +78,7 @@ sequenceDiagram
 - No support for two simultaneous clients using the same Firebase Database
 - No automatic detection of available models due to the heterogeneity of Ollama, LMStudio, etc...
 - No support for chat history and multiple chats (will be added in the future)
+
+## Credits
+
+Thanks to [compose-richtext](https://github.com/halilozercan/compose-richtext) I was able to add markdown parsing that is essential to make LLM output readable.
