@@ -6,6 +6,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import com.belluxx.transfire.ui.theme.TransFireTheme
 
 @Composable
 fun TextDialog(
@@ -14,18 +15,20 @@ fun TextDialog(
     buttonText: String = "OK",
     onDismiss: () -> Unit
 ) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(text = title)
-        },
-        text = {
-            Text(text = body)
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(buttonText)
+    TransFireTheme {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = {
+                Text(text = title)
+            },
+            text = {
+                Text(text = body)
+            },
+            confirmButton = {
+                TextButton(onClick = onDismiss) {
+                    Text(buttonText)
+                }
             }
-        }
-    )
+        )
+    }
 }
