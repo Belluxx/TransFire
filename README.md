@@ -14,13 +14,13 @@ First you will need to setup the client:
 6. Click on `Create Database`
 7. Select a database region of your choice
 8. Select `Start in locked mode` and proceed
-9. Click on the URL icon to copy the database URL. This is your **Firebase RTDB URL**
+9. Click on the URL icon to copy the database URL. This is your **Firebase Database URL**
 10. Now clck on the settings icon in the top-left corner and open `Project Settings`
 11. Go to the `Service accounts` tab and then click on `Database secrets`
 12. You should see one secret in the list, if not click on `Add secret`
-13. Hover on the secret to reveal the `Show` button and click it, then copy the key. This is your **Firebase API key**
+13. Hover on the secret to reveal the `Show` button and click it, then copy the key. This is your **Firebase Database API key**
 14. Now go to the app and click on `Get started`
-15. Put the `Firebase RTDB URL` and `Firebase API key` in the corresponding fields, then choose an AES password to encrypt the traffic to/from Firebase.
+15. Put the `Firebase Database URL` and `Firebase Database API key` in the corresponding fields, then choose an AES password to encrypt the traffic to/from Firebase and put it into `Encryption password`.
 16. Click on `Save configuration` and then `Next`.
 17. You can now proceed to server configuration
 

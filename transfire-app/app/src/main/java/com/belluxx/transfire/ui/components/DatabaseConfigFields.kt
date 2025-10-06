@@ -163,7 +163,7 @@ fun DatabaseConfigFields(
         OutlinedTextField(
             value = firebasePassword,
             onValueChange = { onFirebasePasswordChange(it) },
-            label = { Text("Firebase encryption password") },
+            label = { Text("Encryption password") },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
@@ -177,7 +177,7 @@ fun DatabaseConfigFields(
                     IconButton(onClick = { showPasswordInfoDialog = true }) {
                         Icon(
                             imageVector = Icons.Default.Info,
-                            contentDescription = "About database password",
+                            contentDescription = "About encryption password",
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
