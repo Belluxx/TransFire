@@ -22,6 +22,8 @@ POLL_INTERVAL = int(config["POLL_INTERVAL"])
 KEY_CLIENT_MAILBOX = "mailbox_client"
 KEY_SERVER_MAILBOX = "mailbox_server"
 
+TEMPLATE_KEY = '{{!MESSAGE!}}'
+QUICK_MESSAGE_TEMPLATE = "{'id': 'chatcmpl-quick-message', 'object': 'chat.completion', 'created': 0, 'model': 'quick-message', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': '" + TEMPLATE_KEY + "', 'tool_calls': []}, 'logprobs': None, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 0, 'completion_tokens': 0, 'total_tokens': 0}, 'stats': {}, 'system_fingerprint': 'quick-message'}"
 
 def derive_salt(password: str) -> bytes:
     return hashlib.sha256(password.encode('utf-8')).digest()[:16]
@@ -91,7 +93,7 @@ def firebase_delete(path: str):
     response.raise_for_status()
 
 
-def call_openai_api(messages: list, model: str) -> dict:
+def call_openai_api(messages: list, model: str) -> requests.Response:
     headers = {
         "Authorization": f"Bearer {OPENAI_LIKE_API_KEY}",
         "Content-Type": "application/json"
@@ -107,8 +109,8 @@ def call_openai_api(messages: list, model: str) -> dict:
         json=payload,
         headers=headers
     )
-    response.raise_for_status()
-    return response.json()
+    
+    return response
 
 
 def process_request():
@@ -137,9 +139,17 @@ def process_request():
         
         # Call OpenAI API
         api_response = call_openai_api(request_data['messages'], request_data['model'])
+        api_response_code = api_response.status_code
+        if (api_response_code != 200):
+            if (api_response_code == 404):
+                send_quick_message("**ERROR**: Model not found")
+                return
+        
+        api_response_json = api_response.json()
+        print(api_response_json)
         
         # Encrypt the response
-        response_str = json.dumps(api_response)
+        response_str = json.dumps(api_response_json)
         encrypted_response, iv = encrypt_data(ENCRYPTION_PASSWORD, response_str)
         
         encrypted_data = json.dumps({
@@ -153,14 +163,22 @@ def process_request():
         
         # Clean up client mailbox
         firebase_delete(KEY_CLIENT_MAILBOX)
-        
-    except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 404:
-            pass  # No data available
-        else:
-            print(f"HTTP error: {e}")
+    except UnicodeDecodeError as e:
+        print(f"Error decoding message: {e}")
     except Exception as e:
+        send_quick_message("Unknown processing request:\n\n```\n{e}\n```")
         print(f"Error processing request: {e}")
+
+
+def send_quick_message(message: str):
+    message = message.replace('\n', '\\n').replace('"', '\\"')
+    encrypted_response, iv = encrypt_data(ENCRYPTION_PASSWORD, QUICK_MESSAGE_TEMPLATE.replace(TEMPLATE_KEY, message))
+    encrypted_data = json.dumps({
+        "data": encrypted_response,
+        "iv": iv
+    })
+    firebase_post(KEY_SERVER_MAILBOX, encrypted_data)
+    firebase_delete(KEY_CLIENT_MAILBOX)
 
 
 def main():
