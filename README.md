@@ -4,6 +4,14 @@ TransFire is a simple tool that allows you to use your locally running LLMs whil
 
 To get started [download and install the apk](https://github.com/Belluxx/TransFire/releases/download/v1.0/transfire-v1.0.apk) and follow the setup instructions below.
 
+## 📱 Screnshots
+
+<div align="center">
+  <img src="/static/showcase-1.png?raw=true" width="300" alt="Showcase 1">
+  <img src="/static/showcase-2.png?raw=true" width="300" alt="Showcase 2">
+  <img src="/static/showcase-3.png?raw=true" width="300" alt="Showcase 3">
+</div>
+
 ## 🔨 Setup
 
 First you will need to setup the client:
