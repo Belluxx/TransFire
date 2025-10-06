@@ -164,6 +164,7 @@ def process_request():
         # Clean up client mailbox
         firebase_delete(KEY_CLIENT_MAILBOX)
     except UnicodeDecodeError as e:
+        send_quick_message("**Error**")
         print(f"Error decoding message: {e}")
     except Exception as e:
         send_quick_message("Unknown processing request:\n\n```\n{e}\n```")
