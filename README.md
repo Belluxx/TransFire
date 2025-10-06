@@ -26,17 +26,18 @@ First you will need to setup the client:
 
 Now you can setup and start the server:
 
-1. Open the terminal in the `transfire-server/` directory
-2. Create a virtual environment with `python3 -m venv .venv`
-3. Activate it with `source .venv/bin/activate`
-4. Install dependencies with `pip3 install -r requirements.txt`
-5. Now copy `example.env` to `.env`
-6. Open the new `.env` file
-7. Fill in the fields `FIREBASE_URL`, `FIREBASE_API_KEY`, `ENCRYPTION_PASSWORD` with the same values used in the client setup
-8. Choose a `POLL_INTERVAL`, not too low (<3) or you risk to finish your free firebase daily usage
-9. Put the correct `OPENAI_LIKE_API_URL`. It will be `http://127.0.0.1:1234` if you are using LMStudio or `http://127.0.0.1:11434` if you are using Ollama
-10. `OPENAI_LIKE_API_KEY` should stay as is, change it only if you know what you are doing (for example using remote APIs)
-11. Start the server with `python3 server.py`
+1. Clone the repository with `git clone https://github.com/Belluxx/TransFire`
+2. Navigate to the server directory with `cd TransFire/transfire-server/`
+3. Create a virtual environment with `python3 -m venv .venv`
+4. Activate it with `source .venv/bin/activate`
+5. Install dependencies with `pip3 install -r requirements.txt`
+6. Now copy `example.env` to `.env`
+7. Open the new `.env` file
+8. Fill in the fields `FIREBASE_URL`, `FIREBASE_API_KEY`, `ENCRYPTION_PASSWORD` with the same values used during the client setup
+9. Choose a `POLL_INTERVAL`, not too low (use >2 seconds) or you risk finishing your free firebase daily usage
+10. Put the correct `OPENAI_LIKE_API_URL`. It will be `http://127.0.0.1:1234` if you are using LMStudio or `http://127.0.0.1:11434` if you are using Ollama
+11. `OPENAI_LIKE_API_KEY` should stay as is, change it only if you know what you are doing (for example using remote APIs)
+12. Start the server with `python3 server.py`
 
 ## 🔩 How it works
 ```mermaid
