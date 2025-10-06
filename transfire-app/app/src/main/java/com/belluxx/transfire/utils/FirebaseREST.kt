@@ -29,6 +29,7 @@ fun codeToError(code: Int): FirebaseError {
     return when (code) {
         401 -> FirebaseError.UNAUTHORIZED
         404 -> FirebaseError.DATABASE_NOT_FOUND
+        0 -> FirebaseError.NO_INTERNET_CONNECTION
         else -> FirebaseError.UNKNOWN
     }
 }
