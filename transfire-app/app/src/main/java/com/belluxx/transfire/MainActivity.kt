@@ -62,13 +62,13 @@ class MainActivity : ComponentActivity() {
                 activity?.finish()
             }
 
-            val firebaseUrl = remember { mutableStateOf("") }
-            val firebaseApiKey = remember { mutableStateOf("") }
-            val firebasePassword = remember { mutableStateOf("") }
-            val pollingInterval = remember { mutableLongStateOf(2L) }
-            val modelName = remember { mutableStateOf("") }
-            val systemPrompt = remember { mutableStateOf("") }
-            var firebaseRest by remember { mutableStateOf(FirebaseREST(firebaseApiKey.value, firebaseUrl.value, firebasePassword.value)) }
+            var firebaseUrl by remember { mutableStateOf("") }
+            var firebaseApiKey by remember { mutableStateOf("") }
+            var firebasePassword by remember { mutableStateOf("") }
+            var pollingInterval by remember { mutableLongStateOf(2L) }
+            var modelName by remember { mutableStateOf("") }
+            var systemPrompt by remember { mutableStateOf("") }
+            var firebaseRest by remember { mutableStateOf(FirebaseREST(firebaseApiKey, firebaseUrl, firebasePassword)) }
 
             val lastError = remember { mutableStateOf("") }
             val lastFbError: MutableState<FirebaseError?> = remember { mutableStateOf(null) }
@@ -80,12 +80,12 @@ class MainActivity : ComponentActivity() {
                     Lifecycle.State.CREATED -> {}
                     Lifecycle.State.STARTED -> {}
                     Lifecycle.State.RESUMED -> {
-                        firebaseUrl.value = settings.getFirebaseUrl()
-                        firebaseApiKey.value = settings.getFirebaseApiKey()
-                        firebasePassword.value = settings.getFirebasePassword()
-                        pollingInterval.longValue = settings.getPollingInterval()
-                        modelName.value = settings.getModelName()
-                        systemPrompt.value = settings.getSystemPrompt()
+                        firebaseUrl = settings.getFirebaseUrl()
+                        firebaseApiKey = settings.getFirebaseApiKey()
+                        firebasePassword = settings.getFirebasePassword()
+                        pollingInterval = settings.getPollingInterval()
+                        modelName = settings.getModelName()
+                        systemPrompt = settings.getSystemPrompt()
                     }
                 }
             }
@@ -95,13 +95,13 @@ class MainActivity : ComponentActivity() {
             var isWaitingForResponse by remember { mutableStateOf(false) }
 
             // Add system prompt
-            LaunchedEffect(systemPrompt.value) {
-                Log.d("LaunchedEffect", "Adding system prompt: ${systemPrompt.value}")
-                chat += Message(MessageAuthor.SYSTEM, systemPrompt.value)
+            LaunchedEffect(systemPrompt) {
+                Log.d("LaunchedEffect", "Adding system prompt: $systemPrompt")
+                chat += Message(MessageAuthor.SYSTEM, systemPrompt)
             }
 
-            LaunchedEffect(firebaseApiKey.value, firebaseUrl.value, firebasePassword.value) {
-                firebaseRest = FirebaseREST(firebaseApiKey.value, firebaseUrl.value, firebasePassword.value)
+            LaunchedEffect(firebaseApiKey, firebaseUrl, firebasePassword) {
+                firebaseRest = FirebaseREST(firebaseApiKey, firebaseUrl, firebasePassword)
                 if (firebaseRest.isConfigurationValid()) {
                     while (true) {
                         if (isWaitingForResponse) {
@@ -121,18 +121,18 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
-                        delay(pollingInterval.longValue)
+                        delay(pollingInterval)
                     }
                 }
             }
 
-            showFirebaseError(lastFbError, lastError)
+            ShowFirebaseError(lastFbError, lastError)
 
             TransFireTheme {
                 ChatScreen(
                     context = context,
                     chat = chat,
-                    modelName = modelName.value,
+                    modelName = modelName,
                     isWaitingForResponse = isWaitingForResponse,
                     onSendMessage = { userMessage ->
                         // Add user message to chat
@@ -142,7 +142,7 @@ class MainActivity : ComponentActivity() {
 
                         firebaseRest.sendResponseRequest(
                             chat = chat,
-                            model = modelName.value,
+                            model = modelName,
                             onFailure = { error, fbError ->
                                 lastError.value = error
                                 lastFbError.value = fbError
@@ -163,7 +163,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun showFirebaseError(fbError: MutableState<FirebaseError?>, error: MutableState<String>) {
+fun ShowFirebaseError(fbError: MutableState<FirebaseError?>, error: MutableState<String>) {
     when (fbError.value) {
         FirebaseError.DATABASE_NOT_FOUND -> {
             TextDialog(
