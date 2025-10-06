@@ -15,7 +15,8 @@
             android:name=".SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings"
-            android:theme="@style/Theme.TransFire" />
+            android:theme="@style/Theme.TransFire"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".OnboardingActivity"
             android:exported="false"
