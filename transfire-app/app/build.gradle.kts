@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.belluxx.transfire"
-        minSdk = 31
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"

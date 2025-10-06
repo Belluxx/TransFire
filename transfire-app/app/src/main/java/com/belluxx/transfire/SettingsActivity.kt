@@ -107,7 +107,9 @@ fun SettingsScreen(
         },
         bottomBar = {
             Surface(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding(),
                 tonalElevation = 8.dp,
                 shadowElevation = 8.dp
             ) {
