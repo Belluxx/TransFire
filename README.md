@@ -4,6 +4,11 @@ TransFire is a simple tool that allows you to use your locally running LLMs whil
 
 To get started [download and install the apk](https://github.com/Belluxx/TransFire/releases/download/v1.0/transfire-v1.0.apk) and follow the setup instructions below.
 
+> [!NOTE]  
+> If you want to access LLMs remotely, Tailscale is a much better solution than this one. I built this fir two main reasons:
+> - For fun
+> - For experimenting with an uncommon use of Firebase RTDB
+
 ## 📱 Screnshots
 
 <div align="center">
